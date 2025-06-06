@@ -1,21 +1,32 @@
 package com.example.todo.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "todo_items")
 public class TodoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "Title is required")
     private String title;
+
     private boolean completed;
 
-    public Long getId() {
-        return id;
+    // Konstruktor bezargumentowy dla JPA i testów
+    public TodoItem() {}
+
+    // Konstruktor z wymaganymi polami
+    public TodoItem(String title) {
+        this.title = title;
+        this.completed = false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    // Gettery i settery
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
